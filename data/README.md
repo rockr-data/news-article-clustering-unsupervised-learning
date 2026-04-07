@@ -1,7 +1,6 @@
 # Data Folder
 
-This folder is reserved for dataset references and sample inputs used in this project.
-
+This folder is reserved for dataset references 
 ## Data Availability
 The full datasets are not included in this public repository due to:
 - file size constraints
