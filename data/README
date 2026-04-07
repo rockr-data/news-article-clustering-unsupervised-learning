@@ -1,0 +1,16 @@
+# Data Folder
+
+This folder is reserved for dataset references and sample inputs.
+
+The full datasets used in this project are not included in the public repository due to:
+- file size constraints
+- licensing and source restrictions
+- repository cleanliness
+
+Datasets used in this project:
+- BBC News
+- Reuters-21578
+- AG News
+- Scraped articles from CNN, The Guardian, and TechCrunch
+
+The notebooks assume that the cleaned input files are available locally before execution.
