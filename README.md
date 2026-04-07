@@ -39,6 +39,14 @@ Combined corpus of 138,115 articles from:
 | BIRCH | TF-IDF | 0.4109 | 0.8802 | 94.90% |
 | BIRCH | S-BERT | 0.4057 | 0.8785 | 91.38% |
 
+## Cluster Visualisation
+
+Comparison of clustering behaviour across different vectorisation and clustering methods.
+
+![Clustering Comparison](outputs/figures/clustering_comparisons.png)
+
+The visualisations highlight clearer cluster separation for HDBSCAN compared to K-Means, while BIRCH produces more compact and interpretable clusters, particularly when combined with TF-IDF representations.
+
 ## Tech Stack
 Python · Scikit-learn · HDBSCAN · Sentence-Transformers · 
 UMAP-learn · SpaCy · Pandas · NumPy · Matplotlib · 
