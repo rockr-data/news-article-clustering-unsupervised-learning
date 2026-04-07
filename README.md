@@ -41,11 +41,11 @@ Combined corpus of 138,115 articles from:
 
 ## Cluster Visualisation
 
-Comparison of clustering behaviour across different vectorisation and clustering methods.
+Comparison of clustering behaviour across different vectorisation and clustering approaches.
 
 ![Clustering Comparison](outputs/figures/clustering_comparisons.png)
 
-The visualisations highlight clearer cluster separation for HDBSCAN compared to K-Means, while BIRCH produces more compact and interpretable clusters, particularly when combined with TF-IDF representations.
+The visualisations demonstrate clearer cluster separation for HDBSCAN compared to K-Means, while BIRCH produces more compact and well-defined clusters, particularly when combined with TF-IDF representations. This aligns with the quantitative results, reinforcing the effectiveness of density-based clustering for this task.
 
 ## Tech Stack
 Python · Scikit-learn · HDBSCAN · Sentence-Transformers · 
@@ -67,4 +67,4 @@ Recommendation systems · Social media trend detection ·
 Legal document clustering · Supervised dataset preparation
 
 ## Disclosure
-Code developed with AI assistance.
+Parts of the code were developed with AI-assisted tools. All experimentation, evaluation, and conclusions are the author's own.
