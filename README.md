@@ -1,5 +1,7 @@
 # News Article Clustering by Topic Similarity
 
+> Rethinking NLP at scale: this project is a large-scale NLP study demonstrating that TF-IDF (lexical representation) remains competitive with S-BERT (Semantic Embedding), while less commonly explored clustering methods such as HDBSCAN and BIRCH can outperform widely used approaches like K-Means.
+
 ## Overview
 A large-scale comparative NLP study exploring how different vectorization and clustering techniques perform on 138,115 real-world news articles.
 
@@ -157,11 +159,6 @@ This project:
 - Compares six vectorization–clustering combinations  
 - Includes underexplored methods (HDBSCAN and BIRCH)  
 - Combines internal metrics with sample manual validation  
-
----
-
- 
-- Domain-specific or balanced datasets  
 
 ---
 
