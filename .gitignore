@@ -1,0 +1,23 @@
+# Ignore data files
+data/
+*.csv
+*.xlsx
+*.json
+
+# Ignore large model files
+*.pkl
+*.joblib
+*.npy
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Ignore system files
+.DS_Store
+
+# Ignore environment files
+.env
