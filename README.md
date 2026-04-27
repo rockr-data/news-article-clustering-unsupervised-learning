@@ -1,48 +1,88 @@
 # News Article Clustering by Topic Similarity
 
-> Rethinking NLP at scale: this project is a large-scale NLP study demonstrating that TF-IDF (lexical representation) remains competitive with S-BERT (Semantic Embedding), while less commonly explored clustering methods such as HDBSCAN and BIRCH can outperform widely used approaches like K-Means.
+## Large-Scale Comparative NLP Study on 138,115 News Articles
 
-## Overview
-A large-scale comparative NLP study exploring how different vectorization and clustering techniques perform on 138,115 real-world news articles.
+A flagship unsupervised machine learning project exploring how modern and traditional NLP techniques perform when clustering real-world news articles into meaningful topics at scale.
 
-This project goes beyond typical small-scale experiments by systematically evaluating six vectorization–clustering pipelines, combining:
-
-- Lexical representations (TF-IDF)  
-- Semantic embeddings (S-BERT)  
-- Three clustering paradigms (HDBSCAN, K-Means, BIRCH)  
-
-The goal is to uncover meaningful topic structures in unlabelled news data and evaluate both quantitative performance and human interpretability.
+This study evaluated six end-to-end pipelines across lexical and semantic text representations using three clustering paradigms. The results challenge common assumptions by showing that simpler methods such as TF-IDF can remain highly competitive against modern embeddings, while underused clustering algorithms can outperform conventional baselines.
 
 ---
 
-## Key Insight
+## Why This Project Matters
 
-Less commonly used methods outperformed traditional baselines.
+Large volumes of unstructured text are generated every day across news, customer feedback, legal documents, research papers, and social media.
 
-- HDBSCAN + TF-IDF achieved the strongest internal validation:
-  - Silhouette Score: 0.6692  
-  - Davies-Bouldin Index: 0.4173  
+Organisations need scalable ways to automatically group unlabelled text into themes, detect emerging topics, and organise information efficiently.
 
-- BIRCH + TF-IDF produced the most coherent clusters (sample manual validation):
-  - Accuracy: 94.9%  
+This project demonstrates how unsupervised NLP can solve that problem using production-relevant methods, rigorous evaluation, and large-scale experimentation.
 
-Despite the rise of embeddings, TF-IDF remains highly competitive at scale.
+---
+
+## Executive Summary
+
+Most published clustering studies use relatively small datasets and rely heavily on traditional methods such as K-Means.
+
+This project moved beyond that by testing six combinations of:
+
+- **TF-IDF** (lexical representation)
+- **S-BERT** (semantic embeddings)
+- **HDBSCAN** (density-based clustering)
+- **K-Means** (centroid-based clustering)
+- **BIRCH** (hierarchical clustering)
+
+on a combined corpus of **138,115 real-world news articles**.
+
+The outcome showed that:
+
+- **HDBSCAN + TF-IDF** achieved the strongest internal validation performance
+- **BIRCH + TF-IDF** achieved the highest human-evaluated topical coherence
+- **TF-IDF remained highly competitive with S-BERT at scale**
+
+---
+
+## Key Findings
+
+### Best Quantitative Performance
+
+**HDBSCAN + TF-IDF**
+
+- Silhouette Score: **0.6692**
+- Davies-Bouldin Index: **0.4173**
+
+This combination delivered the strongest balance of cluster cohesion and separation.
+
+### Best Human Interpretability
+
+**BIRCH + TF-IDF**
+
+- Manual topical coherence: **94.9%**
+
+Clusters were highly aligned with human judgement.
+
+### Strategic Insight
+
+Despite the popularity of transformer embeddings, **TF-IDF proved exceptionally strong on a large heterogeneous corpus**, offering both performance and interpretability.
 
 ---
 
 ## Dataset
 
-A combined corpus of 138,115 articles from multiple sources:
+Combined corpus of **138,115 news articles** from multiple sources:
 
-- BBC News (Kaggle)  
-- Reuters-21578 (Kaggle)  
-- AG News Corpus (Kaggle)  
-- Scraped articles:
-  - CNN  
-  - The Guardian  
-  - TechCrunch  
+- BBC News
+- Reuters-21578
+- AG News Corpus
+- Scraped live news sources:
+  - CNN
+  - The Guardian
+  - TechCrunch
 
-The dataset mixes short-form and long-form content, creating a realistic and heterogeneous corpus for clustering.
+This created a realistic mix of:
+
+- short-form headlines
+- long-form journalism
+- multiple writing styles
+- diverse subject domains
 
 ---
 
@@ -50,55 +90,48 @@ The dataset mixes short-form and long-form content, creating a realistic and het
 
 ![Pipeline](outputs/figures/methodology_pipeline.png)
 
-1. Data Collection and Preprocessing  
-   - Tokenisation, lemmatisation, stopword removal (spaCy)  
-   - Deduplication  
+### 1. Data Preparation
 
-2. Vectorization  
-   - TF-IDF (10,000 features)  
-   - S-BERT (384 dimensions)  
+- Cleaning and standardisation
+- Deduplication
+- Tokenisation
+- Lemmatisation
+- Stopword removal using spaCy
 
-3. Dimensionality Reduction  
-   - UMAP (reduced to 10 dimensions)  
+### 2. Text Representation
 
-4. Clustering  
-   - HDBSCAN (density-based)  
-   - K-Means (centroid-based)  
-   - BIRCH (hierarchical)  
+- TF-IDF (10,000 features)
+- S-BERT embeddings (384 dimensions)
 
-5. Evaluation  
-   - Silhouette Score  
-   - Davies-Bouldin Index  
-   - Manual validation (topical coherence)  
+### 3. Dimensionality Reduction
 
----
+- UMAP to 10 dimensions for clustering efficiency
 
-## Exploratory Data Analysis
+### 4. Clustering Algorithms
 
-![Wordcloud](outputs/figures/wordcloud.png)
+- HDBSCAN
+- K-Means
+- BIRCH
 
-EDA revealed:
+### 5. Evaluation Framework
 
-- Right-skewed article length distribution  
-- Dominance of shorter AG News entries  
-- Longer articles from Reuters and BBC  
-- Vocabulary size of 64,090 unique tokens  
-- No missing values after preprocessing  
-
-The word cloud confirms that preprocessing successfully removed stopwords while preserving meaningful terms.
+- Silhouette Score
+- Davies-Bouldin Index
+- Manual cluster validation
+- Visual cluster inspection
 
 ---
 
 ## Results Summary
 
-| Method   | Vectorization | Silhouette | DB Index | Manual Accuracy |
-|----------|--------------|------------|----------|-----------------|
-| HDBSCAN  | TF-IDF       | 0.6692     | 0.4173   | 91.23% |
-| HDBSCAN  | S-BERT       | 0.6174     | 0.4290   | 92.86% |
-| K-Means  | TF-IDF       | 0.4368     | 0.8959   | 74.14% |
-| K-Means  | S-BERT       | 0.4020     | 0.9264   | 87.27% |
-| BIRCH    | TF-IDF       | 0.4109     | 0.8802   | 94.90% |
-| BIRCH    | S-BERT       | 0.4057     | 0.8785   | 91.38% |
+| Method | Representation | Silhouette | DB Index | Manual Accuracy |
+|--------|----------------|-----------|----------|----------------|
+| HDBSCAN | TF-IDF | **0.6692** | **0.4173** | 91.23% |
+| HDBSCAN | S-BERT | 0.6174 | 0.4290 | 92.86% |
+| K-Means | TF-IDF | 0.4368 | 0.8959 | 74.14% |
+| K-Means | S-BERT | 0.4020 | 0.9264 | 87.27% |
+| BIRCH | TF-IDF | 0.4109 | 0.8802 | **94.90%** |
+| BIRCH | S-BERT | 0.4057 | 0.8785 | 91.38% |
 
 ---
 
@@ -106,62 +139,77 @@ The word cloud confirms that preprocessing successfully removed stopwords while 
 
 ![Clustering](outputs/figures/clustering_comparisons.png)
 
-Observations:
+### Observations
 
-- HDBSCAN shows clearer cluster separation and effective noise filtering  
-- K-Means assigns all data points but produces weaker separation  
-- BIRCH creates compact clusters  
-
----
-
-## Key Conclusions
-
-- TF-IDF remains competitive with modern semantic embeddings  
-- HDBSCAN outperforms K-Means in cluster quality and separation  
-- BIRCH achieves the best interpretability based on manual validation  
-- Internal metrics alone are insufficient to assess clustering quality  
-- All methods scale successfully to large datasets  
+- **HDBSCAN** created clearer cluster separation and filtered noisy articles
+- **K-Means** assigned every article but produced weaker separation
+- **BIRCH** created stable and interpretable clusters at scale
 
 ---
 
-## Trade-offs
+## Technical Trade-Offs
 
-| Method   | Strength | Limitation |
-|----------|----------|------------|
-| HDBSCAN  | Strong separation and noise handling | Does not assign all points |
-| K-Means  | Assigns all data points | Lower cluster quality |
-| BIRCH    | Assigns all data points | Lower internal metric scores |
+| Method | Strength | Limitation |
+|--------|----------|-----------|
+| HDBSCAN | Strong separation and noise filtering | Leaves some points unassigned |
+| K-Means | Fast and complete assignment | Lower cohesion |
+| BIRCH | Scalable and interpretable | Lower internal metric scores |
 
 ---
 
 ## Practical Applications
 
-- News topic detection  
-- Trend monitoring  
-- Recommendation systems  
-- Customer feedback analysis  
-- Social media analysis  
-- Dataset preparation for supervised learning  
+This framework can be extended beyond news articles into:
+
+- News topic detection
+- Trend monitoring
+- Recommendation systems
+- Customer feedback analysis
+- Social media monitoring
+- Legal document organisation
+- Research paper grouping
+- Dataset labelling for supervised learning
 
 ---
 
 ## Tech Stack
 
-Python, Scikit-learn, HDBSCAN, Sentence-Transformers, UMAP, spaCy, Pandas, NumPy, Matplotlib, Seaborn, PaCMAP, Plotly, Google Colab  
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- HDBSCAN
+- Sentence-Transformers
+- spaCy
+- UMAP
+- PaCMAP
+- Plotly
+- Matplotlib
+- Seaborn
+- Google Colab
 
 ---
 
 ## Research Contribution
 
-This project:
+This project contributes by:
 
-- Evaluates clustering at large scale (>100K articles)  
-- Compares six vectorization–clustering combinations  
-- Includes underexplored methods (HDBSCAN and BIRCH)  
-- Combines internal metrics with sample manual validation  
+- Benchmarking clustering on **138K+ documents**
+- Comparing six full NLP pipelines
+- Testing underused methods such as **HDBSCAN** and **BIRCH**
+- Combining quantitative metrics with human validation
+- Demonstrating that simpler lexical methods remain highly relevant
 
 ---
 
-## Disclosure
+## Development Note
 
-Parts of the code were developed with AI-assisted tools. All experimentation, evaluation, and conclusions are the author's own.
+Parts of the coding workflow were developed with AI assistance for productivity, debugging support, and code refinement.
+
+Problem framing, experimental design, evaluation decisions, interpretation of findings, and conclusions were independently directed and validated by the author.
+
+---
+
+## Author
+
+Developed as an MSc Data Science & AI dissertation project focused on scalable unsupervised NLP, clustering evaluation, and practical machine learning applications.
