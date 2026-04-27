@@ -2,87 +2,113 @@
 
 ## Large-Scale Comparative NLP Study on 138,115 News Articles
 
-A flagship unsupervised machine learning project exploring how modern and traditional NLP techniques perform when clustering real-world news articles into meaningful topics at scale.
+A flagship unsupervised machine learning project exploring how different text representations and clustering algorithms perform when grouping real-world news articles into meaningful topics at scale.
 
-This study evaluated six end-to-end pipelines across lexical and semantic text representations using three clustering paradigms. The results challenge common assumptions by showing that simpler methods such as TF-IDF can remain highly competitive against modern embeddings, while underused clustering algorithms can outperform conventional baselines.
+This project was designed not only to build clusters, but to test important questions in applied NLP:
+
+- Do semantic embeddings always outperform lexical methods?
+- Are widely used methods like K-Means always the best choice?
+- Can less commonly tested algorithms perform better at scale?
+- How should clustering quality be evaluated beyond metrics alone?
 
 ---
 
 ## Why This Project Matters
 
-Large volumes of unstructured text are generated every day across news, customer feedback, legal documents, research papers, and social media.
+Modern organisations generate vast volumes of unstructured text across:
 
-Organisations need scalable ways to automatically group unlabelled text into themes, detect emerging topics, and organise information efficiently.
+- News platforms
+- Customer reviews
+- Support tickets
+- Research papers
+- Legal documents
+- Social media
 
-This project demonstrates how unsupervised NLP can solve that problem using production-relevant methods, rigorous evaluation, and large-scale experimentation.
+Automatically organising this text into themes can unlock faster decision-making, trend detection, recommendation systems, and downstream supervised learning.
 
----
-
-## Executive Summary
-
-Most published clustering studies use relatively small datasets and rely heavily on traditional methods such as K-Means.
-
-This project moved beyond that by testing six combinations of:
-
-- **TF-IDF** (lexical representation)
-- **S-BERT** (semantic embeddings)
-- **HDBSCAN** (density-based clustering)
-- **K-Means** (centroid-based clustering)
-- **BIRCH** (hierarchical clustering)
-
-on a combined corpus of **138,115 real-world news articles**.
-
-The outcome showed that:
-
-- **HDBSCAN + TF-IDF** achieved the strongest internal validation performance
-- **BIRCH + TF-IDF** achieved the highest human-evaluated topical coherence
-- **TF-IDF remained highly competitive with S-BERT at scale**
+This project demonstrates how scalable unsupervised NLP can support those goals using rigorous experimentation on a large real-world corpus.
 
 ---
 
-## Key Findings
+## Research Motivation
 
-### Best Quantitative Performance
+Many published clustering studies are limited by one or more of the following:
 
-**HDBSCAN + TF-IDF**
+- Small datasets
+- Over-reliance on K-Means
+- Limited comparison across embeddings
+- Heavy dependence on internal metrics only
+- Minimal focus on interpretability
 
-- Silhouette Score: **0.6692**
-- Davies-Bouldin Index: **0.4173**
+This project was created to address those gaps through a structured comparative study on **138,115 articles** using six full pipelines.
 
-This combination delivered the strongest balance of cluster cohesion and separation.
+---
 
-### Best Human Interpretability
+## Why These Methods Were Chosen
 
-**BIRCH + TF-IDF**
+### Text Representations
 
-- Manual topical coherence: **94.9%**
+#### TF-IDF
 
-Clusters were highly aligned with human judgement.
+Selected as a strong lexical baseline.
 
-### Strategic Insight
+Useful for capturing distinctive keywords and interpretable topic signals.
 
-Despite the popularity of transformer embeddings, **TF-IDF proved exceptionally strong on a large heterogeneous corpus**, offering both performance and interpretability.
+#### S-BERT
+
+Selected as a modern semantic embedding model.
+
+Useful for recognising conceptual similarity beyond exact word overlap.
+
+---
+
+### Clustering Algorithms
+
+#### HDBSCAN
+
+Chosen because:
+
+- Less frequently tested in news clustering
+- Automatically determines cluster structure
+- Detects noise and ambiguous articles
+- Handles variable-density clusters
+
+#### K-Means
+
+Chosen as the classic benchmark.
+
+- Fast
+- Popular in literature
+- Full assignment of all data points
+
+#### BIRCH
+
+Chosen because:
+
+- Designed for large-scale efficiency
+- Hierarchical clustering behaviour
+- Underused in news clustering research
 
 ---
 
 ## Dataset
 
-Combined corpus of **138,115 news articles** from multiple sources:
+Combined corpus of **138,115 real-world news articles** from:
 
 - BBC News
 - Reuters-21578
 - AG News Corpus
-- Scraped live news sources:
+- Scraped sources:
   - CNN
   - The Guardian
   - TechCrunch
 
 This created a realistic mix of:
 
-- short-form headlines
-- long-form journalism
-- multiple writing styles
-- diverse subject domains
+- short and long articles
+- multiple publishers
+- varied writing styles
+- broad subject diversity
 
 ---
 
@@ -90,7 +116,7 @@ This created a realistic mix of:
 
 ![Pipeline](outputs/figures/methodology_pipeline.png)
 
-### 1. Data Preparation
+### 1. Preprocessing
 
 - Cleaning and standardisation
 - Deduplication
@@ -98,27 +124,27 @@ This created a realistic mix of:
 - Lemmatisation
 - Stopword removal using spaCy
 
-### 2. Text Representation
+### 2. Vectorisation
 
 - TF-IDF (10,000 features)
 - S-BERT embeddings (384 dimensions)
 
 ### 3. Dimensionality Reduction
 
-- UMAP to 10 dimensions for clustering efficiency
+- UMAP to 10 dimensions
 
-### 4. Clustering Algorithms
+### 4. Clustering
 
 - HDBSCAN
 - K-Means
 - BIRCH
 
-### 5. Evaluation Framework
+### 5. Evaluation
 
 - Silhouette Score
 - Davies-Bouldin Index
 - Manual cluster validation
-- Visual cluster inspection
+- Visual inspection
 
 ---
 
@@ -135,39 +161,80 @@ This created a realistic mix of:
 
 ---
 
+## Key Experimental Observations
+
+### 1. TF-IDF Remained Highly Competitive
+
+Despite the popularity of transformer embeddings, TF-IDF often produced stronger internal validation scores.
+
+This suggests lexical signals remain powerful on large heterogeneous corpora.
+
+### 2. HDBSCAN Produced the Strongest Internal Metrics
+
+**TF-IDF + HDBSCAN** delivered the best cohesion and separation.
+
+It was especially effective at filtering ambiguous articles as noise.
+
+### 3. BIRCH Produced the Most Interpretable Clusters
+
+Although internal metrics were weaker, **BIRCH + TF-IDF** achieved the highest manual coherence.
+
+This highlights that numerical scores do not always match human judgement.
+
+### 4. K-Means Prioritised Coverage Over Purity
+
+K-Means assigned every article to a cluster, but clusters were often less distinct.
+
+### 5. S-BERT Grouped Broader Themes
+
+Semantic embeddings often grouped conceptually related articles, but sometimes merged distinct topics into wider clusters.
+
+---
+
+## Important Insight
+
+Clustering quality should not be judged using metrics alone.
+
+A method with lower Silhouette Score may still produce clusters that are more meaningful to humans.
+
+This is why manual validation was included.
+
+---
+
 ## Cluster Visualisation
 
 ![Clustering](outputs/figures/clustering_comparisons.png)
 
-### Observations
+### Visual Findings
 
-- **HDBSCAN** created clearer cluster separation and filtered noisy articles
-- **K-Means** assigned every article but produced weaker separation
-- **BIRCH** created stable and interpretable clusters at scale
+- HDBSCAN showed clearer boundaries and visible noise regions
+- K-Means produced denser full-assignment partitions
+- BIRCH created broader stable groupings
+- Large datasets create naturally crowded visualisations, making complementary validation essential
 
 ---
 
-## Technical Trade-Offs
+## Practical Method Selection Guide
 
-| Method | Strength | Limitation |
-|--------|----------|-----------|
-| HDBSCAN | Strong separation and noise filtering | Leaves some points unassigned |
-| K-Means | Fast and complete assignment | Lower cohesion |
-| BIRCH | Scalable and interpretable | Lower internal metric scores |
+| Use Case | Recommended Approach |
+|---------|----------------------|
+| Highest topic precision | HDBSCAN + TF-IDF |
+| Broad semantic grouping | HDBSCAN + S-BERT |
+| Need every document assigned | K-Means |
+| Large-scale interpretable clustering | BIRCH + TF-IDF |
+| Fast baseline benchmarking | K-Means + TF-IDF |
 
 ---
 
 ## Practical Applications
-
-This framework can be extended beyond news articles into:
 
 - News topic detection
 - Trend monitoring
 - Recommendation systems
 - Customer feedback analysis
 - Social media monitoring
-- Legal document organisation
-- Research paper grouping
+- Legal document grouping
+- Research paper organisation
 - Dataset labelling for supervised learning
 
 ---
@@ -194,11 +261,12 @@ This framework can be extended beyond news articles into:
 
 This project contributes by:
 
-- Benchmarking clustering on **138K+ documents**
-- Comparing six full NLP pipelines
-- Testing underused methods such as **HDBSCAN** and **BIRCH**
-- Combining quantitative metrics with human validation
-- Demonstrating that simpler lexical methods remain highly relevant
+- Evaluating clustering at **138K+ article scale**
+- Comparing six complete NLP pipelines
+- Demonstrating the value of underused methods such as HDBSCAN and BIRCH
+- Showing TF-IDF remains highly relevant
+- Combining metrics with human validation
+- Highlighting real-world method trade-offs
 
 ---
 
@@ -206,7 +274,7 @@ This project contributes by:
 
 Parts of the coding workflow were developed with AI assistance for productivity, debugging support, and code refinement.
 
-Problem framing, experimental design, evaluation decisions, interpretation of findings, and conclusions were independently directed and validated by the author.
+Problem framing, experiment design, parameter selection, evaluation decisions, interpretation of findings, and conclusions were independently directed and validated by the author.
 
 ---
 
